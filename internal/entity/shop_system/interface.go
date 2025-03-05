@@ -1,4 +1,4 @@
-package shop
+package shop_system
 
 type BonusCardsSystem interface {
 	AccrualBonus(sum float64)

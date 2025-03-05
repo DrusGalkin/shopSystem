@@ -1,7 +1,6 @@
-package common
+package shop_system
 
 import (
-	"StrongPakage/internal/entity/shop"
 	"errors"
 	"fmt"
 )
@@ -15,7 +14,7 @@ type Human[T any] struct {
 	Money     uint
 	Places    *Places[T]
 	Inventory Inventory[T]
-	Bonus     shop.BonusCardsSystem
+	Bonus     BonusCardsSystem
 }
 
 type Places[T any] struct {
@@ -35,7 +34,7 @@ func NewHuman(name string, money uint) *Human[any] {
 
 func (h *Human[T]) GoToShop(s T) error {
 	h.Places = &Places[T]{place: s}
-	shop, ok := any(s).(*shop.Shop[T])
+	shop, ok := any(s).(*Shop[T])
 	if !ok {
 		return NotFoundPlaceException
 	}
@@ -46,7 +45,7 @@ func (h *Human[T]) GoToShop(s T) error {
 }
 
 func (h *Human[T]) TakeCart() error {
-	shop, ok := any(h.Places.place).(*shop.Shop[T])
+	shop, ok := any(h.Places.place).(*Shop[T])
 	if !ok {
 		return NotFoundShopException
 	}
@@ -62,18 +61,18 @@ func (h *Human[T]) TakeCart() error {
 }
 
 func (h *Human[T]) TakeProduct(nameProduct string, quantity uint) error {
-	shop, ok := any(h.Places.place).(*shop.Shop[T])
+	shop, ok := any(h.Places.place).(*Shop[T])
 	if !ok {
 		return NotFoundShopException
 	}
 
-	if any(h.Inventory.Tile).(*shop.ShoppingCarts[any]) == nil {
-		return shop.NotFountInventoryCart
+	if any(h.Inventory.Tile).(*ShoppingCarts[any]) == nil {
+		return NotFountInventoryCart
 	}
 
-	cart, ok := any(h.Inventory.Tile).(*shop.ShoppingCarts[any])
+	cart, ok := any(h.Inventory.Tile).(*ShoppingCarts[any])
 	if !ok {
-		return shop.NotFountInventoryCart
+		return NotFountInventoryCart
 	}
 
 	for i := 0; i < int(quantity); i++ {
@@ -87,7 +86,7 @@ func (h *Human[T]) TakeProduct(nameProduct string, quantity uint) error {
 }
 
 func (h *Human[T]) BuyProducts(useBonus bool) error {
-	shop, ok := any(h.Places.place).(shop.Shop[T])
+	shop, ok := any(h.Places.place).(Shop[T])
 	if !ok {
 		return NotFoundPlaceException
 	}

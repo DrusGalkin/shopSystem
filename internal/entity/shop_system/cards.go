@@ -1,4 +1,4 @@
-package shop
+package shop_system
 
 type BonusCard struct {
 	cardID uint

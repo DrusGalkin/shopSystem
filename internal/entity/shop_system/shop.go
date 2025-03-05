@@ -1,7 +1,6 @@
-package shop
+package shop_system
 
 import (
-	"StrongPakage/internal/entity/shop/common"
 	"errors"
 	"fmt"
 )
@@ -88,7 +87,7 @@ func (s *Shop[any]) AddProduct(product ...*Product) error {
 	return nil
 }
 
-func (s *Shop[T]) CashRegister(h common.Human[T]) float64 {
+func (s *Shop[T]) CashRegister(h Human[T]) float64 {
 	var cost float64
 	cart := any(h.Inventory.Tile).(ShoppingCarts[T])
 	for _, el := range cart.products {
